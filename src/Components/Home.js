@@ -1,27 +1,34 @@
 import React from "react";
 import BannerBackground from "../Assets/home-banner-background.png";
-import BannerImage from "../Assets/home-banner-image.png";
+import BannerImage from "../Assets/data1.png";
 import Navbar from "./Navbar";
 import { FiArrowRight } from "react-icons/fi";
 
 const Home = () => {
+  const scrollToSection = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
   return (
     <div className="home-container">
-      <Navbar />
+      <Navbar scrollToSection={scrollToSection} />
       <div className="home-banner-container">
         <div className="home-bannerImage-container">
           <img src={BannerBackground} alt="" />
         </div>
         <div className="home-text-section">
           <h1 className="primary-heading">
-            Your Favourite Food Delivered Hot & Fresh
+          "Empower Your Data Management"
           </h1>
           <p className="primary-text">
-            Healthy switcher chefs do all the prep work, like peeding, chopping
-            & marinating, so you can cook a fresh food.
+          "Empower Your Data Management with our cutting-edge solutions. Our tools enable you to seamlessly integrate, analyze, 
+          and visualize your data, providing you with 
+          the insights needed to make informed decisions. 
           </p>
           <button className="secondary-button">
-            Order Now <FiArrowRight />{" "}
+            Get Started <FiArrowRight />{" "}
           </button>
         </div>
         <div className="home-image-section">

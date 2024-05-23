@@ -1,8 +1,8 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState } from "react";
-import Logo from "../Assets/Logo.svg";
+import React from "react";
 import { BsCart2 } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 import { HiOutlineBars3 } from "react-icons/hi2";
+import { Link as ScrollLink } from 'react-scroll'; // Import Link from react-scroll
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
@@ -17,58 +17,66 @@ import CommentRoundedIcon from "@mui/icons-material/CommentRounded";
 import PhoneRoundedIcon from "@mui/icons-material/PhoneRounded";
 import ShoppingCartRoundedIcon from "@mui/icons-material/ShoppingCartRounded";
 
-const Navbar = () => {
-  const [openMenu, setOpenMenu] = useState(false);
+const Navbar = ({ scrollToSection }) => {
+  const navigate = useNavigate();
+
+  const handleGetStarted = () => {
+    navigate("/choice");
+  };
+
   const menuOptions = [
     {
       text: "Home",
       icon: <HomeIcon />,
+      id: "home",
     },
     {
       text: "About",
       icon: <InfoIcon />,
+      id: "about",
     },
     {
       text: "Testimonials",
       icon: <CommentRoundedIcon />,
+      id: "testimonials",
     },
     {
       text: "Contact",
       icon: <PhoneRoundedIcon />,
+      id: "contact",
     },
     {
       text: "Cart",
       icon: <ShoppingCartRoundedIcon />,
     },
   ];
+
   return (
     <nav>
       <div className="nav-logo-container">
-        <img src={Logo} alt="" />
+        <a className="myapp">MyApp</a>
       </div>
       <div className="navbar-links-container">
-        <a href="">Home</a>
-        <a href="">About</a>
-        <a href="">Testimonials</a>
-        <a href="">Contact</a>
+        {menuOptions.map((item) => (
+          <ScrollLink key={item.id} to={item.id} smooth={true} duration={500} offset={-70}>
+            {item.text}
+          </ScrollLink>
+        ))}
         <a href="">
           <BsCart2 className="navbar-cart-icon" />
         </a>
-        <button className="primary-button">Bookings Now</button>
+        <button className="primary-button" onClick={handleGetStarted}>
+          Get Started
+        </button>
       </div>
       <div className="navbar-menu-container">
-        <HiOutlineBars3 onClick={() => setOpenMenu(true)} />
+        <HiOutlineBars3 />
       </div>
-      <Drawer open={openMenu} onClose={() => setOpenMenu(false)} anchor="right">
-        <Box
-          sx={{ width: 250 }}
-          role="presentation"
-          onClick={() => setOpenMenu(false)}
-          onKeyDown={() => setOpenMenu(false)}
-        >
+      <Drawer anchor="right">
+        <Box sx={{ width: 250 }} role="presentation">
           <List>
             {menuOptions.map((item) => (
-              <ListItem key={item.text} disablePadding>
+              <ListItem key={item.id} disablePadding>
                 <ListItemButton>
                   <ListItemIcon>{item.icon}</ListItemIcon>
                   <ListItemText primary={item.text} />
