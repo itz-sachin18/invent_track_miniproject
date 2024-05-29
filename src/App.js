@@ -5,78 +5,41 @@ import Work from "./Components/Work";
 import Testimonial from "./Components/Testimonial";
 import Contact from "./Components/Contact";
 import Footer from "./Components/Footer";
-import React from 'react';
+import React from "react";
 import Choice from "./Components/choice";
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import R_regis from "./R_componets/RLogin";
 import S_regis from "./S_componets/SLogin";
 import R_login from "./R_componets/RSign";
 import S_login from "./S_componets/SSign";
+import Blank from "./S_componets/Blank";
 
 function App() {
   return (
-    <Router>
-      
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <div className="App">
-              
-                <Home />
-                <About />
-                <Work />
-                <Testimonial />
-                <Contact />
-                <Footer />
-              </div>
-            }
-          />
-          <Route
-            path="/choice"
-            element={
-              <div>
-                <Choice />
-              </div>
-            }
-          />
-          <Route
-            path="/choice/S_regis"
-            element={
-              <div>
-                <S_regis />
-              </div>
-            }
-          />
-          <Route
-            path="/choice/R_regis"
-            element={
-              <div>
-                <R_regis />
-              </div>
-            }
-          />
-          <Route
-            path="/choice/R_login"
-            element={
-              <div>
-                <R_login />
-              </div>
-            }
-          />
-          <Route
-            path="/choice/S_login"
-            element={
-              <div>
-                <S_login />
-              </div>
-            }
-          />
-          
-        </Routes>
-        
-      
-    </Router>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <div className="App">
+              <Home />
+              <About />
+              <Work />
+              <Testimonial />
+              <Contact />
+              <Footer />
+            </div>
+          }
+        />
+        <Route path="/choice" element={<Choice />}></Route>
+        <Route path="/choice/S_regis" element={<S_regis />} ></Route>
+        <Route path="/choice/R_regis" element={<R_regis />} ></Route>
+        <Route path="/choice/R_login" element={<R_login />} ></Route>
+        <Route path="/choice/S_login" element={<S_login />} ></Route>
+        <Route path="/home" element={<Home />} ></Route>
+  
+      </Routes>
+    </BrowserRouter>
   );
 }
 

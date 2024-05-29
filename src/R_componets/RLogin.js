@@ -2,9 +2,36 @@ import React, { useState } from "react";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 import "./RLogin.css";
 import img1 from "../Assets/customer.png";
+import axios from 'axios'
+import { useNavigate } from "react-router-dom";
 
 const R_regis = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [pass, setPass] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const [ress, setRess] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!name || !email || !pass) {
+      setError('Please fill in all fields.');
+      return;
+    }
+
+    axios.post('http://localhost:3000/choice/R_regis', { name, email, pass })
+      .then((res) => {
+        console.log(res);
+        navigate('/choice/R_login');
+      })
+      .catch((err) => {
+        console.log(err);
+        setRess('Registration failed. Please try again.');
+        setRess("");
+      });
+  };
 
   return (
     <div className="login-main">
@@ -20,17 +47,19 @@ const R_regis = () => {
           <div className="login-center">
             <h2>Welcome!</h2>
             <p>Please create your details</p>
-            <form>
+            <form onSubmit={handleSubmit}>
             <input
                   type="text"
                   placeholder="Username"
+                  onChange={(e) => setName(e.target.value)}
                 />
-              <input type="email" placeholder="Email" />
+              <input type="email" placeholder="Email"  onChange={(e) => setEmail(e.target.value)} />
               {/* Email input */}
               <div className="pass-input-div">
                 <input
                   type={showPassword ? "text" : "password"}
                   placeholder="Password"
+                  onChange={(e) => setPass(e.target.value)}
                 />
                 {/* Password input with toggle visibility */}
                 {showPassword ? (
@@ -39,6 +68,8 @@ const R_regis = () => {
                   <FaEye onClick={() => setShowPassword(!showPassword)} />
                 )}
               </div>
+              <p>{ress}</p>
+              {error && <p style={{ color: 'red' }}>{error}</p>}
               <div className="login-center-options">
                 <div className="remember-div">
                   <input type="checkbox" id="remember-checkbox" />
@@ -49,7 +80,7 @@ const R_regis = () => {
                 </a>
               </div>
               <div className="login-center-buttons">
-                <button type="button">Register</button>
+                <button type="submit">Register</button>
               </div>
             </form>
           </div>
